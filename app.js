@@ -3,7 +3,7 @@ const test = require('./config/dbconnectiontest');
 const userRoutes = require('./routes/userRoutes');
 const CarRoutes = require('./routes/CarRoutes');
 const authRoutes = require('./routes/AuthRoutes');
-const MechanicRoutes = require('./routes/AuthRoutes');
+const MechanicRoutes = require('./routes/MechanicRoutes');
 
 
 require('dotenv').config();

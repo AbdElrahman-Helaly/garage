@@ -25,16 +25,16 @@ const Mechanic = sequelize.define('Mechanic', {
         allowNull: false
     }
 });
-/*
-Mechanice.associat = (models) => {
-    Mechanice.hasMany(models.Car,
+
+Mechanic.associate = (models) => {
+    Mechanic.hasMany(models.Car,
         {
             foreignKey: 'mechanicId',
             onDelete: 'CASCADE'
         }
     )
 };
-*/
+
 
 
 module.exports = Mechanic;

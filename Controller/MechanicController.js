@@ -1,4 +1,5 @@
 const Mechanic = require('../models/Mechanic');
+const { route } = require('../routes/userRoutes');
 
 
 exports.Getall = async (req, res) => {
@@ -14,7 +15,7 @@ exports.Getall = async (req, res) => {
 exports.CreateMechanic = async (req, res) => {
     try {
         const Mechanic = await Mechanic.create(req.body);
-        res.status(201).json(cMechanic);
+        res.status(201).json(Mechanic);
     }
     catch (err) {
         res.status(500).json({ error: err.message });
@@ -60,3 +61,4 @@ exports.UpdateMechanic = async (req, res) => {
         return res.status(500).json({ success: false, error: err.message });
     }
 }
+

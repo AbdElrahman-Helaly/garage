@@ -5,7 +5,7 @@ const { Model } = require('sequelize');
 
 
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
 
     const token = req.header('Authorization')?.replace('Bearer ', '');
 
@@ -14,7 +14,8 @@ const auth = (req, res, next) => {
     }
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        req.user = decoded;
+        const user = await User.findByPk(decoded.id);
+        req.user = user;
         next();
     } catch (err) {
         res.status(400).json({ success: false, error: "Invalid token." });

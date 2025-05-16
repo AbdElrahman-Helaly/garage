@@ -1,6 +1,5 @@
 const User = require('../models/user');
 
-
 exports.GetAllUsers = async (req, res) => {
     try {
         const users = await User.findAll();
@@ -21,7 +20,7 @@ exports.CreateUser = async (req, res) => {
 
 exports.GetbyId = async (req, res) => {
     try {
-        const user = await User.findByPk(req.param.id);
+        const user = await User.findByPk(req.params.id);
         if (!user) {
             return res.status(404).json({ success: false, error: "User not found" });
         }
@@ -33,12 +32,17 @@ exports.GetbyId = async (req, res) => {
 };
 
 exports.DeleteUser = async (req, res) => {
+    const loggedInUser = req.user;
     try {
-        const user = await User.findByPk(req.param.id);
+        const user = await User.findByPk(req.params.id);
         if (!user) {
             return res.status(404).json({ success: false, error: "User not found" });
         }
+        if (loggedInUser.role !== 'admin' && loggedInUser.id !== targetUserId) {
+            return res.status(403).json({ error: "Not authorized to delete this user" });
+        }
         await user.destroy();
+        res.json({ success: true, message: "User deleted successfully" });
     }
     catch (err) {
         return res.status(500).json({ success: false, error: err.message });
@@ -47,16 +51,14 @@ exports.DeleteUser = async (req, res) => {
 
 exports.UpdateUser = async (req, res) => {
     try {
-        const user = await User.findByPk(req.param.id);
-        if (!car) {
+        const user = await User.findByPk(req.params.id);
+        if (!user) {
             return res.status(404).json({ success: false, error: "User not found" });
         }
-        const updatedUser = await User.update(req.body);
-        res.json({ success: true, data: updatedUser });
+        await user.update(req.body);
+        res.json({ success: true, data: user });
     }
     catch (err) {
         return res.status(500).json({ success: false, error: err.message });
     }
 };
-
-

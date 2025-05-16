@@ -39,9 +39,9 @@ Car.associate = (models) => {
     Car.belongsTo(models.User, {
         foreignKey: 'userId'
     });
-    /* Car.belongsTo(models.Mechanic, {
-          foreignKey: 'mechanicId'
-      });*/
+    Car.belongsTo(models.Mechanic, {
+        foreignKey: 'mechanicId'
+    });
 };
 
 

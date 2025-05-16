@@ -3,18 +3,19 @@ const { sequelize } = require('../config/db');
 
 const User = require('./user');
 const Car = require('./Car');
-//const Mechanic = require('./Mechanic');
+const Mechanic = require('./Mechanic');
 
 const db = {
   User,
   Car,
+  Mechanic,
   Sequelize
-
 };
+
 
 User.associate(db);
 Car.associate(db);
-//Mechanic.associate(db);
+Mechanic.associate(db);
 
 
 
