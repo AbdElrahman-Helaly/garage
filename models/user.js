@@ -4,6 +4,11 @@ const bcrypt = require('bcrypt');
 
 
 const User = sequelize.define('User', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -29,9 +34,22 @@ const User = sequelize.define('User', {
             this.setDataValue('password', hashedPassword);
         }
     }
-
+    , role: {
+        type: DataTypes.ENUM('user', 'mechanic', 'admin'),
+        defaultValue: 'user',
+    },
 
 
 });
+User.associate = (models) => {
+    User.hasMany(models.Car,
+        {
+            foreignKey: 'userId',
+            onDelete: 'CASCADE'
+        }
+
+    );
+};
+
 
 module.exports = User;

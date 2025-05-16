@@ -1,67 +1,62 @@
-const { User, Car } = require('../models');
+const Mechanic = require('../models/Mechanic');
 
 
-exports.GetallCar = async (req, res) => {
+exports.Getall = async (req, res) => {
     try {
-        const Cars = await Car.findAll();
-        res.json(Cars);
+        const Mechanic = await Mechanic.findAll();
+        res.json(Mechanic);
     }
     catch (err) {
         res.status(400).json({ success: false, error: err.message });
     }
-
 }
 
-exports.CreateCar = async (req, res) => {
+exports.CreateMechanic = async (req, res) => {
     try {
-        const car = await Car.create(req.body);
-        res.status(201).json(car);
+        const Mechanic = await Mechanic.create(req.body);
+        res.status(201).json(cMechanic);
     }
     catch (err) {
         res.status(500).json({ error: err.message });
     }
 }
 
-exports.GetCarbyid = async (req, res) => {
+exports.GetMechanicbyid = async (req, res) => {
     try {
-        const car = await Car.findByPk(req.param.id);
-        if (!car) {
+        const Mechanic = await Mechanic.findByPk(req.param.id);
+        if (!Mechanic) {
             return res.status(404).json({ success: false, error: "User not found" });
         }
-        res.json({ success: true, data: car });
+        res.json({ success: true, data: Mechanic });
     }
     catch (err) {
         return res.status(500).json({ success: false, error: err.message });
     }
 }
 
-exports.DeleteCar = async (req, res) => {
+exports.DeleteMechanic = async (req, res) => {
     try {
-        const car = await Car.findByPk(req.param.id);
-        if (!car) {
+        const Mechanic = await Mechanic.findByPk(req.param.id);
+        if (!Mechanic) {
             return res.status(404).json({ success: false, error: "User not found" });
         }
-        await car.destroy();
+        await Mechanic.destroy();
     }
     catch (err) {
         return res.status(500).json({ success: false, error: err.message });
     }
 }
 
-exports.UpdateCar = async (req, res) => {
+exports.UpdateMechanic = async (req, res) => {
     try {
-        const car = await Car.findByPk(req.param.id);
-        if (!car) {
+        const Mechanic = await Mechanic.findByPk(req.param.id);
+        if (!Mechanic) {
             return res.status(404).json({ success: false, error: "User not found" });
         }
-        const updatedCar = await Car.update(req.body);
+        const updatedCar = await Mechanic.update(req.body);
         res.json({ success: true, data: updatedCar });
     }
     catch (err) {
         return res.status(500).json({ success: false, error: err.message });
     }
 }
-
-
-
-

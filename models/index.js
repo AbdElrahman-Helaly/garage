@@ -1,23 +1,40 @@
-const dbConfig = require('../config/config');
-const express = require('express');
+const { Sequelize } = require('sequelize');
+const { sequelize } = require('../config/db');
 
-const app = express();
+const User = require('./user');
+const Car = require('./Car');
+//const Mechanic = require('./Mechanic');
+
+const db = {
+  User,
+  Car,
+  Sequelize
+
+};
+
+User.associate(db);
+Car.associate(db);
+//Mechanic.associate(db);
 
 
-async function testConnection() {
-  try {
-    await sequelize.authenticate();
-    console.log("Connication done");
+
+
+
+Object.values(db).forEach((model) => {
+  if (model?.name) {
+    console.log(`Checking model: ${model.name}`);
+  } else {
+    console.log('Model has no name');
   }
-  catch (error) {
-    console.log(error);
+
+  if (typeof model.associate === 'function') {
+    console.log(` Running associate for: ${model.name}`);
+    model.associate(db);
+  } else {
+    console.log(`No associate function found for: ${model.name}`);
   }
-  finally {
-    await sequelize.close();
-  }
-}
+});
 
 
-testConnection();
 
-module.exports = sequelize;
+module.exports = db;

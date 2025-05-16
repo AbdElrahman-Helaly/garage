@@ -22,6 +22,12 @@ const sequelize = new Sequelize(
     }
 );
 
-
+sequelize.sync({ force: true })
+    .then(() => {
+        console.log("Database synced and tables created!");
+    })
+    .catch((error) => {
+        console.error("Error syncing database:", error);
+    });
 
 module.exports = { sequelize };
